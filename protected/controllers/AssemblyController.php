@@ -118,7 +118,9 @@ class AssemblyController extends Controller
 	}
 
     public function actionCancel(){
-
+        $this->render('view',array(
+            'model'=>$this->loadModel($id),
+        ));
     }
 
 	/**
