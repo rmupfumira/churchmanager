@@ -117,6 +117,10 @@ class AssemblyController extends Controller
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 	}
 
+    public function actionCancel(){
+
+    }
+
 	/**
 	 * Lists all models.
 	 */
