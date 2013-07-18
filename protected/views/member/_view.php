@@ -6,10 +6,10 @@
 <div class="view">
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('memberid')); ?>:</b>
-	<?php echo CHtml::link(CHtml::encode($data->memberid), array('view', 'id'=>$data->memberid)); ?>
+	<?php echo CHtml::link(CHtml::encode($data->memberid), array('member/view', 'id'=>$data->memberid)); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('assemblyid')); ?>:</b>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('Assembly')); ?>:</b>
 	<?php echo CHtml::encode($data->assemblyid); ?>
 	<br />
 
@@ -33,7 +33,6 @@
 	<?php echo CHtml::encode($data->email); ?>
 	<br />
 
-	<?php /*
 	<b><?php echo CHtml::encode($data->getAttributeLabel('homeaddress')); ?>:</b>
 	<?php echo CHtml::encode($data->homeaddress); ?>
 	<br />
@@ -46,6 +45,6 @@
 	<?php echo CHtml::encode($data->datecreated); ?>
 	<br />
 
-	*/ ?>
+
 
 </div>

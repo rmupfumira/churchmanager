@@ -41,7 +41,7 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'status'); ?>
-		<?php echo $form->textField($model,'status',array('size'=>60,'maxlength'=>250)); ?>
+		<?php echo $form->dropDownList($model,'status',$model->getStatusTypes()); ?>
 		<?php echo $form->error($model,'status'); ?>
 	</div>
 

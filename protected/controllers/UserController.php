@@ -1,20 +1,9 @@
 <?php
 
-class MemberController extends Controller
+class UserController extends Controller
 {
 
-    private $_assembly = null;
 
-    protected function loadAssembly($assemblyid){
-        //if the assembly is null create it based on input id
-        if($this->_assembly === null){
-            $this->_assembly = Assembly::model()->findByPk($assemblyid);
-            if($this->_assembly === null){
-                throw new CHttpException(404,'The specified assembly does not exist.');
-            }
-        }
-        return $this->_assembly;
-    }
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
@@ -29,11 +18,8 @@ class MemberController extends Controller
 		return array(
 			'accessControl', // perform access control for CRUD operations
 			'postOnly + delete', // we only allow deletion via POST request
-            'assemblyContext + create',
 		);
 	}
-
-
 
 	/**
 	 * Specifies the access control rules.
@@ -67,9 +53,8 @@ class MemberController extends Controller
 	 */
 	public function actionView($id)
 	{
-        //$assemblyname =$this->loadModel($id)->getAssemblyName();
 		$this->render('view',array(
-			'model'=>$this->loadModel($id)
+			'model'=>$this->loadModel($id),
 		));
 	}
 
@@ -79,17 +64,16 @@ class MemberController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new Member;
-        $model->assemblyid = $this->_assembly->assemblyid;
+		$model=new User;
 
 		// Uncomment the following line if AJAX validation is needed
-		 $this->performAjaxValidation($model);
+		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Member']))
+		if(isset($_POST['User']))
 		{
-			$model->attributes=$_POST['Member'];
+			$model->attributes=$_POST['User'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->memberid));
+				$this->redirect(array('view','id'=>$model->username));
 		}
 
 		$this->render('create',array(
@@ -109,11 +93,11 @@ class MemberController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Member']))
+		if(isset($_POST['User']))
 		{
-			$model->attributes=$_POST['Member'];
+			$model->attributes=$_POST['User'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->memberid));
+				$this->redirect(array('view','id'=>$model->username));
 		}
 
 		$this->render('update',array(
@@ -140,7 +124,7 @@ class MemberController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Member');
+		$dataProvider=new CActiveDataProvider('User');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
@@ -151,10 +135,10 @@ class MemberController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new Member('search');
+		$model=new User('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Member']))
-			$model->attributes=$_GET['Member'];
+		if(isset($_GET['User']))
+			$model->attributes=$_GET['User'];
 
 		$this->render('admin',array(
 			'model'=>$model,
@@ -165,12 +149,12 @@ class MemberController extends Controller
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
 	 * @param integer $id the ID of the model to be loaded
-	 * @return Member the loaded model
+	 * @return User the loaded model
 	 * @throws CHttpException
 	 */
 	public function loadModel($id)
 	{
-		$model=Member::model()->findByPk($id);
+		$model=User::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -178,24 +162,14 @@ class MemberController extends Controller
 
 	/**
 	 * Performs the AJAX validation.
-	 * @param Member $model the model to be validated
+	 * @param User $model the model to be validated
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='member-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='user-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
 	}
-    public function filterAssemblyContext($filterChain){
-
-        if(isset($_GET['aid'])){
-            $this->loadAssembly($_GET['aid']);
-        }
-        else{
-            throw new CHttpException(403,'Must specify an assembly before performing this action');
-        }
-         $filterChain->run();
-    }
 }

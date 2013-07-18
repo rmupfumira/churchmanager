@@ -51,8 +51,14 @@ class AssemblyController extends Controller
 	 */
 	public function actionView($id)
 	{
+        $memberDataProvider = new CActiveDataProvider('Member',array(
+            'criteria'=>array(
+            'condition'=>'assemblyid=:assemblyid',
+            'params'=>array(':assemblyid'=>$this->loadModel($id)->assemblyid),),
+            'pagination'=>array('pageSize'=>2,),
+        ));
 		$this->render('view',array(
-			'model'=>$this->loadModel($id),
+			'model'=>$this->loadModel($id),'memberDataProvider'=>$memberDataProvider,
 		));
 	}
 
@@ -117,7 +123,7 @@ class AssemblyController extends Controller
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 	}
 
-    public function actionCancel(){
+    public function actionCancel($id){
         $this->render('view',array(
             'model'=>$this->loadModel($id),
         ));

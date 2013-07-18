@@ -31,7 +31,7 @@
 			'items'=>array(
 				array('label'=>'Home', 'url'=>array('/site/index')),
 				array('label'=>'Members', 'url'=>array('/member', 'view'=>'about')),
-				array('label'=>'Assemblies', 'url'=>array('/site/contact')),
+				array('label'=>'Assemblies', 'url'=>array('/assembly')),
 				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
 				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
 			),
@@ -48,9 +48,9 @@
 	<div class="clear"></div>
 
 	<div id="footer">
-		Copyright &copy; <?php echo date('Y'); ?> by My Company.<br/>
+		Copyright &copy; <?php echo date('Y'); ?> Revival Fire Ministries.<br/>
 		All Rights Reserved.<br/>
-		<?php echo Yii::powered(); ?>
+	<!-- echo "Powered by ECYOD"; ?> -->
 	</div><!-- footer -->
 
 </div><!-- page -->

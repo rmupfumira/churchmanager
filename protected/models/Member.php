@@ -14,6 +14,7 @@
  * @property string $homeaddress
  * @property string $status
  * @property string $datecreated
+ * @property string $assemblyname
  */
 class Member extends CActiveRecord
 {
@@ -62,6 +63,7 @@ class Member extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+            'assembly'=>array(self::BELONGS_TO, 'Assembly','assemblyid')
 		);
 	}
 
@@ -73,14 +75,14 @@ class Member extends CActiveRecord
 		return array(
 			'memberid' => 'Memberid',
 			'assemblyid' => 'Assemblyid',
-			'firstname' => 'Firstname',
-			'lastname' => 'Lastname',
+			'firstname' => 'First Name',
+			'lastname' => 'Last Name',
 			'gender' => 'Gender',
 			'phone' => 'Phone',
 			'email' => 'Email',
-			'homeaddress' => 'Homeaddress',
+			'homeaddress' => 'Home Address',
 			'status' => 'Status',
-			'datecreated' => 'Datecreated',
+			'datecreated' => 'Date Created',
 		);
 	}
 
@@ -110,4 +112,9 @@ class Member extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+  /*  public function getAssemblyName(){
+        $id = $this->assemblyid;
+        $model = Assembly::model()->findAllByPk($id);
+        return $model->name;
+    }*/
 }

@@ -24,6 +24,8 @@ class Assembly extends CActiveRecord
           self::STATUS_PENDING_APPROVAL=>'Pending Approval'
         );
     }
+
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -56,6 +58,7 @@ class Assembly extends CActiveRecord
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('assemblyid, name, address, contactphone, status', 'safe', 'on'=>'search'),
+            array('status','in','range'=>self::getStatusTypes())
 		);
 	}
 
@@ -67,6 +70,8 @@ class Assembly extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+            'members'=> array(self::HAS_MANY, 'Member','assemblyid'),
+            'users' => array(self::HAS_MANY, 'User','assemblyid')
 		);
 	}
 

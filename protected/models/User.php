@@ -12,6 +12,17 @@
  */
 class User extends CActiveRecord
 {
+    const ROLE_ADMINISTRATOR = "Administrator";
+    const ROLE_SUPER_ADMINISTRATOR = "Super Administrator";
+    const ROLE_PASTOR = "Pastor";
+
+    function getRoles(){
+        return array(
+          self::ROLE_ADMINISTRATOR=>"Administrator",
+          self::ROLE_PASTOR=>"Pastor",
+          self::ROLE_SUPER_ADMINISTRATOR=>"Super Administrator",
+        );
+    }
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -43,6 +54,7 @@ class User extends CActiveRecord
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('username, lastlogin, password, status, role', 'safe', 'on'=>'search'),
+            array('roles','in','range'=>self::getRoles())
 		);
 	}
 

@@ -22,12 +22,6 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'assemblyid'); ?>
-		<?php echo $form->textField($model,'assemblyid',array('size'=>60,'maxlength'=>250)); ?>
-		<?php echo $form->error($model,'assemblyid'); ?>
-	</div>
-
-	<div class="row">
 		<?php echo $form->labelEx($model,'firstname'); ?>
 		<?php echo $form->textField($model,'firstname',array('size'=>60,'maxlength'=>250)); ?>
 		<?php echo $form->error($model,'firstname'); ?>
@@ -71,7 +65,17 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'datecreated'); ?>
-		<?php echo $form->textField($model,'datecreated'); ?>
+        <?php $this->widget('zii.widgets.jui.CJuiDatePicker',array(
+            'name'=>'datecreated',
+            // additional javascript options for the date picker plugin
+            'options'=>array(
+                'showAnim'=>'fold',
+            ),
+            'htmlOptions'=>array(
+                'style'=>'height:20px;'
+            ),
+        ));
+        ?>
 		<?php echo $form->error($model,'datecreated'); ?>
 	</div>
 
