@@ -1,19 +1,22 @@
 <?php
 
+require_once('/protected/rfm/utils.php');
+
 class MemberController extends Controller
 {
 
     private $_assembly = null;
 
-    protected function loadAssembly($assemblyid){
+    protected function loadAssemblies($assemblyid){
         //if the assembly is null create it based on input id
-        if($this->_assembly === null){
-            $this->_assembly = Assembly::model()->findByPk($assemblyid);
-            if($this->_assembly === null){
-                throw new CHttpException(404,'The specified assembly does not exist.');
-            }
+        if($assemblyid === null){
+             return CHtml::listData(Assembly::model()->findAll(),'assemblyid','name');
         }
-        return $this->_assembly;
+        else{
+            return  CHtml::listData(Assembly::model()->findAllByPk($assemblyid),'assemblyid','name');
+        }
+
+
     }
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -29,8 +32,7 @@ class MemberController extends Controller
 		return array(
 			'accessControl', // perform access control for CRUD operations
 			'postOnly + delete', // we only allow deletion via POST request
-            'assemblyContext + create',
-		);
+           );
 	}
 
 
@@ -80,7 +82,6 @@ class MemberController extends Controller
 	public function actionCreate()
 	{
 		$model=new Member;
-        $model->assemblyid = $this->_assembly->assemblyid;
 
 		// Uncomment the following line if AJAX validation is needed
 		 $this->performAjaxValidation($model);
@@ -88,13 +89,19 @@ class MemberController extends Controller
 		if(isset($_POST['Member']))
 		{
 			$model->attributes=$_POST['Member'];
+            if(!$model->getIsNewRecord()){
+                 $model->memberid = Utilities.generateMemberId($model->assemblyid);
+                throw new CHttpException(404,"yes its new!!");
+            }else{
+                throw new CHttpException(404,"NO its not new!!");
+            }
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->memberid));
 		}
-
-		$this->render('create',array(
-			'model'=>$model,
-		));
+        $aid = null;
+        if(isset($_GET['aid']))
+        $aid = $_GET['aid'];
+		$this->render('create',array('model'=>$model,'assemblies'=>$this->loadAssemblies($aid)));
 	}
 
 	/**
@@ -188,14 +195,12 @@ class MemberController extends Controller
 			Yii::app()->end();
 		}
 	}
-    public function filterAssemblyContext($filterChain){
+    /*public function filterAssemblyContext($filterChain){
 
         if(isset($_GET['aid'])){
             $this->loadAssembly($_GET['aid']);
         }
-        else{
-            throw new CHttpException(403,'Must specify an assembly before performing this action');
-        }
+
          $filterChain->run();
-    }
+    }*/
 }

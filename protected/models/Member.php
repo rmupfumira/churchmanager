@@ -14,7 +14,6 @@
  * @property string $homeaddress
  * @property string $status
  * @property string $datecreated
- * @property string $assemblyname
  */
 class Member extends CActiveRecord
 {
@@ -112,9 +111,12 @@ class Member extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
-  /*  public function getAssemblyName(){
+    public function getAssemblyName(){
         $id = $this->assemblyid;
-        $model = Assembly::model()->findAllByPk($id);
+        $model = Assembly::model()->findByPk($id);
         return $model->name;
-    }*/
+    }
+    public function fullname(){
+        return $this->firstname." ".$this->lastname;
+    }
 }

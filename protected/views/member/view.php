@@ -16,20 +16,19 @@ $this->menu=array(
 );
 ?>
 
-<h1>View Member #<?php echo $model->memberid; ?></h1>
+<h1>View Member : <?php echo $model->fullname(); ?></h1>
 
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
-		'memberid',
-		'assemblyid',
-		'firstname',
-		'lastname',
+        'firstname',
+        'lastname',
+		array('name'=>'Assembly','value'=>CHtml::encode($model->getAssemblyName())),
 		'gender',
 		'phone',
 		'email',
 		'homeaddress',
 		'status',
-		'datecreated',
+
 	),
 )); ?>

@@ -16,9 +16,9 @@
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'memberid'); ?>
-		<?php echo $form->textField($model,'memberid',array('size'=>60,'maxlength'=>250)); ?>
-		<?php echo $form->error($model,'memberid'); ?>
+		<?php echo $form->labelEx($model,'assembly'); ?>
+        <?php echo CHtml::activeDropDownList($model,'assemblyid',$assemblies) ?>
+		<?php echo $form->error($model,'assemblyid'); ?>
 	</div>
 
 	<div class="row">
@@ -55,12 +55,6 @@
 		<?php echo $form->labelEx($model,'homeaddress'); ?>
 		<?php echo $form->textField($model,'homeaddress',array('size'=>60,'maxlength'=>500)); ?>
 		<?php echo $form->error($model,'homeaddress'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'status'); ?>
-		<?php echo $form->textField($model,'status',array('size'=>60,'maxlength'=>250)); ?>
-		<?php echo $form->error($model,'status'); ?>
 	</div>
 
 	<div class="row">

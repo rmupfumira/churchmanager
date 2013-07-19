@@ -5,20 +5,17 @@
 
 <div class="view">
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('memberid')); ?>:</b>
-	<?php echo CHtml::link(CHtml::encode($data->memberid), array('member/view', 'id'=>$data->memberid)); ?>
-	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('Assembly')); ?>:</b>
-	<?php echo CHtml::encode($data->assemblyid); ?>
-	<br />
+    <b><?php echo CHtml::encode($data->getAttributeLabel('firstname')); ?>:</b>
+    <?php echo CHtml::encode($data->firstname); ?>
+    <br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('firstname')); ?>:</b>
-	<?php echo CHtml::encode($data->firstname); ?>
-	<br />
+    <b><?php echo CHtml::encode($data->getAttributeLabel('lastname')); ?>:</b>
+    <?php echo CHtml::encode($data->lastname); ?>
+    <br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('lastname')); ?>:</b>
-	<?php echo CHtml::encode($data->lastname); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('assemblyname')); ?>:</b>
+	<?php echo CHtml::encode($data->assemblyname); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('gender')); ?>:</b>
@@ -40,11 +37,5 @@
 	<b><?php echo CHtml::encode($data->getAttributeLabel('status')); ?>:</b>
 	<?php echo CHtml::encode($data->status); ?>
 	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('datecreated')); ?>:</b>
-	<?php echo CHtml::encode($data->datecreated); ?>
-	<br />
-
-
 
 </div>
