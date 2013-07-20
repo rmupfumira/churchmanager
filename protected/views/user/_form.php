@@ -10,25 +10,12 @@
 	'id'=>'user-form',
 	'enableAjaxValidation'=>false,
 )); ?>
-    <?php
-    $this->widget('zii.widgets.jui.CJuiAutoComplete',array(
-        'name'=>'city',
-        'source'=>array('ac1','ac2','ac3'),
-        // additional javascript options for the autocomplete plugin
-        'options'=>array(
-            'minLength'=>'2',
-        ),
-        'htmlOptions'=>array(
-            'style'=>'height:20px;',
-        ),
-    ));
-    ?>
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
 
 	<?php echo $form->errorSummary($model); ?>
     <div class="row">
         <?php echo $form->labelEx($model,'Member'); ?>
-        <?php echo $form->textField($model,'memberid',array('size'=>60,'maxlength'=>250)); ?>
+        <?php echo CHtml::activeDropDownList($model,'memberid',$members) ?>
         <?php echo $form->error($model,'memberid'); ?>
     </div>
 

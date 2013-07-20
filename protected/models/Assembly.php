@@ -12,19 +12,6 @@
  */
 class Assembly extends CActiveRecord
 {
-    const STATUS_ACTIVE = "Active";
-    const STATUS_DEACTIVATED ="DeActivated";
-    const STATUS_PENDING_APPROVAL = "Pending Aprroval";
-
-    public function getStatusTypes(){
-
-        return array(
-          self::STATUS_ACTIVE=>'Active',
-          self::STATUS_DEACTIVATED=>'DeActivated',
-          self::STATUS_PENDING_APPROVAL=>'Pending Approval'
-        );
-    }
-
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -58,7 +45,7 @@ class Assembly extends CActiveRecord
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('assemblyid, name, address, contactphone, status', 'safe', 'on'=>'search'),
-            array('status','in','range'=>self::getStatusTypes())
+            array('status','in','range'=>Utilities::getStatusTypes())
 		);
 	}
 

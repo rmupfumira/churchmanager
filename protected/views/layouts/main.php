@@ -30,8 +30,10 @@
         <?php $this->widget('zii.widgets.CMenu',array(
             'items'=>array(
                 array('label'=>'Home', 'url'=>array('/site/index'), 'visible'=>!Yii::app()->user->isGuest),
-                array('label'=>'Members', 'url'=>array('/member', 'view'=>'about'), 'visible'=>!Yii::app()->user->isGuest),
+                array('label'=>'Members', 'url'=>array('/member'), 'visible'=>!Yii::app()->user->isGuest),
                 array('label'=>'Assemblies', 'url'=>array('/assembly'), 'visible'=>!Yii::app()->user->isGuest),
+                array('label'=>'Events', 'url'=>array('/event'), 'visible'=>!Yii::app()->user->isGuest),
+                array('label'=>'Users', 'url'=>array('/user'), 'visible'=>!Yii::app()->user->isGuest),
                 array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
                 array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
             ),
@@ -42,7 +44,10 @@
 			'links'=>$this->breadcrumbs,
 		)); ?><!-- breadcrumbs -->
     <?php endif?>
-
+    <?php if (Yii::app()->user->hasFlash('success')):?>
+    <div class="flash-success">
+        <?php echo Yii::app()->user->getFlash('success') ?></div>
+    <?php endif?>
     <?php echo $content; ?>
 
     <div class="clear"></div>

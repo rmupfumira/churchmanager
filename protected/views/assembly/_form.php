@@ -15,11 +15,6 @@
 
 	<?php echo $form->errorSummary($model); ?>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'assemblyid'); ?>
-		<?php echo $form->textField($model,'assemblyid',array('size'=>60,'maxlength'=>250)); ?>
-		<?php echo $form->error($model,'assemblyid'); ?>
-	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'name'); ?>
@@ -39,11 +34,6 @@
 		<?php echo $form->error($model,'contactphone'); ?>
 	</div>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'status'); ?>
-		<?php echo $form->dropDownList($model,'status',$model->getStatusTypes()); ?>
-		<?php echo $form->error($model,'status'); ?>
-	</div>
 
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>

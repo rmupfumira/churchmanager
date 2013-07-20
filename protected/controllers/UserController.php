@@ -21,31 +21,6 @@ class UserController extends Controller
 		);
 	}
 
-	/**
-	 * Specifies the access control rules.
-	 * This method is used by the 'accessControl' filter.
-	 * @return array access control rules
-	 */
-	public function accessRules()
-	{
-		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
-				'users'=>array('*'),
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
-				'users'=>array('@'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>array('admin'),
-			),
-			array('deny',  // deny all users
-				'users'=>array('*'),
-			),
-		);
-	}
 
 	/**
 	 * Displays a particular model.
@@ -72,13 +47,18 @@ class UserController extends Controller
 		if(isset($_POST['User']))
 		{
 			$model->attributes=$_POST['User'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->username));
+            $model->password = Constants::DEFAULT_PASSWORD;
+            $model->status = Constants::STATUS_ACTIVE;
+            $m = Member::model()->findByPk($model->memberid);
+            $model->assemblyid = $m->assemblyid;
+			if($model->save()){
+                Yii::app()->user->setFlash('success', 'User created successfully');
+                $this->redirect(array('view','id'=>$model->username));
+            }
+
 		}
 
-		$this->render('create',array(
-			'model'=>$model,
-		));
+		$this->render('create',array('model'=>$model,'members'=>Utilities::loadMembers(null)));
 	}
 
 	/**
@@ -96,8 +76,11 @@ class UserController extends Controller
 		if(isset($_POST['User']))
 		{
 			$model->attributes=$_POST['User'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->username));
+			if($model->save()){
+                Yii::app()->user->setFlash('success', 'User updated successfully');
+                $this->redirect(array('view','id'=>$model->username));
+            }
+
 		}
 
 		$this->render('update',array(

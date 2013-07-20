@@ -35,7 +35,7 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'gender'); ?>
-		<?php echo $form->textField($model,'gender',array('size'=>60,'maxlength'=>250)); ?>
+		<?php echo $form->dropDownList($model,'gender',array('Male'=>'Male','Female'=>'Female')); ?>
 		<?php echo $form->error($model,'gender'); ?>
 	</div>
 
@@ -56,23 +56,6 @@
 		<?php echo $form->textField($model,'homeaddress',array('size'=>60,'maxlength'=>500)); ?>
 		<?php echo $form->error($model,'homeaddress'); ?>
 	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'datecreated'); ?>
-        <?php $this->widget('zii.widgets.jui.CJuiDatePicker',array(
-            'name'=>'datecreated',
-            // additional javascript options for the date picker plugin
-            'options'=>array(
-                'showAnim'=>'fold',
-            ),
-            'htmlOptions'=>array(
-                'style'=>'height:20px;'
-            ),
-        ));
-        ?>
-		<?php echo $form->error($model,'datecreated'); ?>
-	</div>
-
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
 	</div>

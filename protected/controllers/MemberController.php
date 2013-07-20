@@ -1,23 +1,12 @@
 <?php
 
-require_once('/protected/rfm/utils.php');
 
 class MemberController extends Controller
 {
 
-    private $_assembly = null;
-
-    protected function loadAssemblies($assemblyid){
-        //if the assembly is null create it based on input id
-        if($assemblyid === null){
-             return CHtml::listData(Assembly::model()->findAll(),'assemblyid','name');
-        }
-        else{
-            return  CHtml::listData(Assembly::model()->findAllByPk($assemblyid),'assemblyid','name');
-        }
 
 
-    }
+
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
@@ -37,31 +26,7 @@ class MemberController extends Controller
 
 
 
-	/**
-	 * Specifies the access control rules.
-	 * This method is used by the 'accessControl' filter.
-	 * @return array access control rules
-	 */
-	public function accessRules()
-	{
-		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
-				'users'=>array('*'),
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
-				'users'=>array('@'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>array('admin'),
-			),
-			array('deny',  // deny all users
-				'users'=>array('*'),
-			),
-		);
-	}
+
 
 	/**
 	 * Displays a particular model.
@@ -89,19 +54,26 @@ class MemberController extends Controller
 		if(isset($_POST['Member']))
 		{
 			$model->attributes=$_POST['Member'];
-            if(!$model->getIsNewRecord()){
-                 $model->memberid = Utilities.generateMemberId($model->assemblyid);
-                throw new CHttpException(404,"yes its new!!");
-            }else{
-                throw new CHttpException(404,"NO its not new!!");
+            $model->memberid = Utilities::generateMemberId($model->getAssemblyName());
+            $model->status = Constants::STATUS_ACTIVE;
+            $account = new Account();
+            $account->owner = $model->memberid;
+            $account->status = Constants::STATUS_ACTIVE;
+            $account->accountid = Utilities::generateAccountNumber();
+            $account->accounttype = Constants::ACCOUNT_TYPE_MEMBER;
+            if($account->save()){
+                if($model->save()){
+                    Yii::app()->user->setFlash('success', 'Member created succesfully');
+                    $this->redirect(array('view','id'=>$model->memberid));
+                }
             }
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->memberid));
+
+
 		}
         $aid = null;
         if(isset($_GET['aid']))
         $aid = $_GET['aid'];
-		$this->render('create',array('model'=>$model,'assemblies'=>$this->loadAssemblies($aid)));
+		$this->render('create',array('model'=>$model,'assemblies'=>Utilities::loadAssemblies($aid)));
 	}
 
 	/**
@@ -119,13 +91,14 @@ class MemberController extends Controller
 		if(isset($_POST['Member']))
 		{
 			$model->attributes=$_POST['Member'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->memberid));
-		}
+			if($model->save()){
+                Yii::app()->user->setFlash('success', 'Member updated succesfully');
+                $this->redirect(array('view','id'=>$model->memberid));
+            }
 
-		$this->render('update',array(
-			'model'=>$model,
-		));
+		}
+        $aid = $model->assemblyid;
+		$this->render('update',array('model'=>$model,'assemblies'=>Utilities::loadAssemblies($aid)));
 	}
 
 	/**
@@ -195,6 +168,26 @@ class MemberController extends Controller
 			Yii::app()->end();
 		}
 	}
+    protected function actionPaytithe($id){
+
+        $model=$this->loadModel($id);
+
+        // Uncomment the following line if AJAX validation is needed
+        // $this->performAjaxValidation($model);
+
+        if(isset($_POST['Member']))
+        {
+            $model->attributes=$_POST['Member'];
+            if($model->save()){
+                Yii::app()->user->setFlash('success', 'Tithe payment succesfully loaded');
+                $this->redirect(array('view','id'=>$model->memberid));
+            }
+
+        }
+
+        $this->render('paytithe',array('model'=>$model));
+    }
+
     /*public function filterAssemblyContext($filterChain){
 
         if(isset($_GET['aid'])){

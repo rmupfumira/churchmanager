@@ -9,20 +9,11 @@
  * @property string $password
  * @property string $status
  * @property string $role
+ * @property string $assemblyid
+ * @property string $memberid
  */
 class User extends CActiveRecord
 {
-    const ROLE_ADMINISTRATOR = "Administrator";
-    const ROLE_SUPER_ADMINISTRATOR = "Super Administrator";
-    const ROLE_PASTOR = "Pastor";
-
-    function getRoles(){
-        return array(
-          self::ROLE_ADMINISTRATOR=>"Administrator",
-          self::ROLE_PASTOR=>"Pastor",
-          self::ROLE_SUPER_ADMINISTRATOR=>"Super Administrator",
-        );
-    }
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -49,12 +40,13 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('username, lastlogin', 'required'),
-			array('username, password, status, role', 'length', 'max'=>250),
+			array('username, memberid', 'required'),
+            array('username','required'),
+            array('username','unique'),
+			array('username, password, status, role, assemblyid, memberid', 'length', 'max'=>250),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('username, lastlogin, password, status, role', 'safe', 'on'=>'search'),
-            array('roles','in','range'=>self::getRoles())
+			array('username, lastlogin, password, status, role, assemblyid, memberid', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -80,6 +72,8 @@ class User extends CActiveRecord
 			'password' => 'Password',
 			'status' => 'Status',
 			'role' => 'Role',
+			'assemblyid' => 'Assemblyid',
+			'memberid' => 'Memberid',
 		);
 	}
 
@@ -99,9 +93,35 @@ class User extends CActiveRecord
 		$criteria->compare('password',$this->password,true);
 		$criteria->compare('status',$this->status,true);
 		$criteria->compare('role',$this->role,true);
+		$criteria->compare('assemblyid',$this->assemblyid,true);
+		$criteria->compare('memberid',$this->memberid,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
 	}
+    public function getMemberName(){
+        return Utilities::getMemberName($this->memberid);
+    }
+    public function getAssemblyName(){
+        return Utilities::getAssemblyName($this->assemblyid);
+    }
+    public function getRoles(){
+        return Utilities::getUserRoles();
+    }
+    protected function afterValidate()
+    {
+        parent::afterValidate();
+        if(!$this->hasErrors())
+            $this->password = $this->hashPassword($this->password);
+    }
+    /**
+     * Generates the password hash.
+     * @param string password
+     * @return string hash
+     */
+    public function hashPassword($password)
+    {
+        return md5($password);
+    }
 }

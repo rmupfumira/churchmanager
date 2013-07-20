@@ -45,12 +45,14 @@ class Member extends CActiveRecord
 		return array(
 			array('firstname,email,phone', 'required'),
             array('email', 'email'),
+            array('email','unique'),
+            array('phone','unique'),
 			array('memberid, assemblyid, firstname, lastname, gender, phone, email, status', 'length', 'max'=>250),
 			array('homeaddress', 'length', 'max'=>500),
 			array('datecreated', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('memberid, assemblyid, firstname, lastname, gender, phone, email, homeaddress, status, datecreated', 'safe', 'on'=>'search'),
+			array('memberid, assemblyid, firstname, lastname, gender, phone, email, homeaddress, status', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -62,7 +64,7 @@ class Member extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-            'assembly'=>array(self::BELONGS_TO, 'Assembly','assemblyid')
+            'assembly'=>array(self::HAS_ONE, 'Assembly','assemblyid')
 		);
 	}
 
@@ -119,4 +121,5 @@ class Member extends CActiveRecord
     public function fullname(){
         return $this->firstname." ".$this->lastname;
     }
+
 }
