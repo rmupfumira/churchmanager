@@ -9,6 +9,7 @@
  * @property string $address
  * @property string $contactphone
  * @property string $status
+ * @property string $contactemail
  */
 class Assembly extends CActiveRecord
 {
@@ -40,6 +41,7 @@ class Assembly extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('assemblyid', 'required'),
+            array('contactemail', 'email'),
 			array('assemblyid, name, contactphone, status', 'length', 'max'=>250),
 			array('address', 'length', 'max'=>500),
 			// The following rule is used by search().
@@ -68,11 +70,12 @@ class Assembly extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'assemblyid' => 'Assemblyid',
+			'assemblyid' => 'Assembly',
 			'name' => 'Name',
 			'address' => 'Address',
-			'contactphone' => 'Contactphone',
+			'contactphone' => 'Contact phone',
 			'status' => 'Status',
+            'contactemail'=>'Contact Email'
 		);
 	}
 

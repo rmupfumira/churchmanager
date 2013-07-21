@@ -13,9 +13,6 @@
 	<?php echo CHtml::encode($data->lastlogin); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('password')); ?>:</b>
-	<?php echo CHtml::encode($data->password); ?>
-	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('status')); ?>:</b>
 	<?php echo CHtml::encode($data->status); ?>
@@ -26,7 +23,7 @@
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('assemblyid')); ?>:</b>
-	<?php echo CHtml::encode($data->assemblyid); ?>
+	<?php echo CHtml::encode($data->getAssemblyName()); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('memberid')); ?>:</b>

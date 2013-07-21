@@ -90,12 +90,8 @@ class User extends CActiveRecord
 
 		$criteria->compare('username',$this->username,true);
 		$criteria->compare('lastlogin',$this->lastlogin,true);
-		$criteria->compare('password',$this->password,true);
 		$criteria->compare('status',$this->status,true);
 		$criteria->compare('role',$this->role,true);
-		$criteria->compare('assemblyid',$this->assemblyid,true);
-		$criteria->compare('memberid',$this->memberid,true);
-
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
@@ -123,5 +119,14 @@ class User extends CActiveRecord
     public function hashPassword($password)
     {
         return md5($password);
+    }
+    /**
+     * Checks if the given password is correct.
+     * @param string the password to be validated
+     * @return boolean whether the password is valid
+     */
+    public function validatePassword($password)
+    {
+        return $this->hashPassword($password)===$this->password;
     }
 }

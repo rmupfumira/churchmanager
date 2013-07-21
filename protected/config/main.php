@@ -16,6 +16,9 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
+        'ext.YiiMailer',
+        'application.extensions.formatCurrency.*',
+
 	),
 
 	'modules'=>array(
@@ -35,6 +38,8 @@ return array(
 		'user'=>array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>false,
+            'class'=>'WebUser',
+
 		)
 		// uncomment the following to enable URLs in path-format
 		/*

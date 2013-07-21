@@ -52,7 +52,20 @@ class UserController extends Controller
             $m = Member::model()->findByPk($model->memberid);
             $model->assemblyid = $m->assemblyid;
 			if($model->save()){
-                Yii::app()->user->setFlash('success', 'User created successfully');
+                //now send an email to him
+
+                $mail = new YiiMailer('welcome_email', array('model'=>$model,'name' => $m->firstname, 'description' => 'RFM Church Manager'));
+                //set properties
+                $mail->setFrom("churchmanager@rfm.org.za",Yii::app()->name);
+                $mail->setSubject("Welcome!");
+                $mail->setTo($m->email);
+                //send
+                if ($mail->send()) {
+                    Yii::app()->user->setFlash('success','User created successfully and notification email has been sent.');
+                } else {
+                    Yii::app()->user->setFlash('error','Error while sending email: '.$mail->getError());
+                }
+
                 $this->redirect(array('view','id'=>$model->username));
             }
 

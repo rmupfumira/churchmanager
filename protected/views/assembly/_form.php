@@ -33,7 +33,11 @@
 		<?php echo $form->textField($model,'contactphone',array('size'=>60,'maxlength'=>250)); ?>
 		<?php echo $form->error($model,'contactphone'); ?>
 	</div>
-
+    <div class="row">
+        <?php echo $form->labelEx($model,'contactemail'); ?>
+        <?php echo $form->textField($model,'contactemail',array('size'=>60,'maxlength'=>250)); ?>
+        <?php echo $form->error($model,'contactemail'); ?>
+    </div>
 
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
