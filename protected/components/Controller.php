@@ -3,7 +3,7 @@
  * Controller is the customized base controller class.
  * All controller classes for this application should extend from this base class.
  */
-class Controller extends CController
+class Controller extends RController
 {
 	/**
 	 * @var string the default layout for the controller view. Defaults to '//layouts/column1',
@@ -53,5 +53,15 @@ class Controller extends CController
                 'users'=>array('*'),
             ),
         );
+    }
+    public function filters()
+    {
+        return array(
+            'rights', // perform access control for CRUD operations
+        );
+    }
+    public function allowedActions()
+    {
+        return 'index, login,logout';
     }
 }
