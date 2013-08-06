@@ -8,6 +8,7 @@
 class UserIdentity extends CUserIdentity
 {
     private $_id;
+    public $user;
 	/**
 	 * Authenticates a user.
 	 * The example implementation makes sure if the username and password
@@ -28,11 +29,20 @@ class UserIdentity extends CUserIdentity
             {
                 $this->_id=$user->username;
                 $this->username=$user->username;
+                //set isAdmin now
+                if ( $user->superuser == 1)
+                {
+                    yii::app()->user->setState("isAdminUser",true);
+                } else {
+                    yii::app()->user->setState("isAdminUser",false);
+                }
+
                 $this->setState('lastlogin', date("m/d/y g:i A", strtotime($user->lastlogin)));
                 $user->saveAttributes(array(
                     'lastlogin'=>date("Y-m-d H:i:s", time()),
                         ));
                 $this->errorCode=self::ERROR_NONE;
+                $this->setUser($user);
             }
         return $this->errorCode==self::ERROR_NONE;
         }
@@ -40,6 +50,13 @@ class UserIdentity extends CUserIdentity
     public function getId()
     {
         return $this->_id;
+    }
+
+    public function getUser(){
+        return $this->user;
+    }
+    public function setUser(CActiveRecord $user){
+        $this->user = $user->attributes;
     }
 
 

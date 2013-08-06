@@ -1,0 +1,9 @@
+exception 'CException' with message 'Property "CConsoleApplication.db" is read only.' in C:\wamp\www\yii-1.1.13.e9e4a0\framework\base\CComponent.php:170
+Stack trace:
+#0 C:\wamp\www\yii-1.1.13.e9e4a0\framework\base\CModule.php(513): CComponent->__set('db', Array)
+#1 C:\wamp\www\yii-1.1.13.e9e4a0\framework\base\CApplication.php(150): CModule->configure(Array)
+#2 C:\wamp\www\yii-1.1.13.e9e4a0\framework\YiiBase.php(125): CApplication->__construct('C:\wamp\www\chu...')
+#3 C:\wamp\www\yii-1.1.13.e9e4a0\framework\YiiBase.php(113): YiiBase::createApplication('CConsoleApplica...', 'C:\wamp\www\chu...')
+#4 C:\wamp\www\yii-1.1.13.e9e4a0\framework\yiic.php(23): YiiBase::createConsoleApplication('C:\wamp\www\chu...')
+#5 C:\wamp\www\churchmanager\protected\yiic.php(7): require_once('C:\wamp\www\yii...')
+#6 {main}

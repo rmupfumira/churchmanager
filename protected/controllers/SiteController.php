@@ -41,7 +41,11 @@ class SiteController extends Controller
 	 */
 	public function actionIndex()
 	{
-		// renders the view file 'protected/views/site/index.php'
+
+        if (Yii::app()->user->isGuest)
+            $this->redirect(Yii::app()->createUrl('user/login'));
+        else
+        // renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
 		$this->render('index');
 	}
@@ -71,15 +75,19 @@ class SiteController extends Controller
 			$model->attributes=$_POST['ContactForm'];
 			if($model->validate())
 			{
-				$name='=?UTF-8?B?'.base64_encode($model->name).'?=';
-				$subject='=?UTF-8?B?'.base64_encode($model->subject).'?=';
-				$headers="From: $name <{$model->email}>\r\n".
-					"Reply-To: {$model->email}\r\n".
-					"MIME-Version: 1.0\r\n".
-					"Content-type: text/plain; charset=UTF-8";
 
-				mail(Yii::app()->params['adminEmail'],$subject,$model->body,$headers);
-				Yii::app()->user->setFlash('contact','Thank you for contacting us. We will respond to you as soon as possible.');
+                //use yii mailer
+                $mail = new YiiMailer('feedback', array('feedback'=>$model,'description' => 'RFM Church Manager - Feedback'));
+                //set properties
+                $mail->setFrom("churchmanager@rfm.org.za",Yii::app()->user->name);
+                $mail->setSubject('=?UTF-8?B?'.base64_encode($model->subject).'?=');
+                $mail->setTo(Yii::app()->params['adminEmail']);
+                //send
+                if ($mail->send()) {
+                    Yii::app()->user->setFlash('contact','Thank you for your feedback.');
+                } else {
+                    Yii::app()->user->setFlash('error','Error while sending email: '.$mail->getError());
+                }
 				$this->refresh();
 			}
 		}

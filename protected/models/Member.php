@@ -43,7 +43,7 @@ class Member extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('firstname,email,phone', 'required'),
+			array('firstname,phone', 'required'),
             array('email', 'email'),
             array('email','unique'),
             array('phone','unique'),
@@ -64,7 +64,7 @@ class Member extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-            'assembly'=>array(self::HAS_ONE, 'Assembly','assemblyid')
+            'assembly'=>array(self::BELONGS_TO, 'Assembly','assemblyid')
 		);
 	}
 
@@ -118,8 +118,37 @@ class Member extends CActiveRecord
         $model = Assembly::model()->findByPk($id);
         return $model->name;
     }
+    public function getAccount(){
+        $account = Account::model()->find('owner =:ownerid',array(':ownerid'=>$this->memberid));
+        return $account;
+    }
     public function fullname(){
         return $this->firstname." ".$this->lastname;
+    }
+
+    /** Creates a suggest query to be used for ajax autocomplete e.t.c
+     * @param $keyword
+     * @param int $limit
+     */
+    public function suggestMember($keyword, $limit=20){
+
+        $models = Member::model()->findAll(array("condition"=>"firstname like '$keyword%'"));
+        $suggest = array();
+        foreach($models as $model){
+            $suggest[] = array(
+                'label' => $model->fullname().' - '.$model->phone,
+                'value' => $model->fullname(),
+                'memberid'=>$model->memberid,
+                'phone'=>$model->phone,
+            );
+        }
+        return $suggest;
+    }
+    public function sendMeSMS($msg){
+           Utilities::sendSMS($this->phone,$msg);
+    }
+    public function sendMeEmail($email){
+
     }
 
 }

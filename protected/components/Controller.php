@@ -28,28 +28,29 @@ class Controller extends RController
      */
     public function accessRules()
     {
+
         return array(
             array('allow',  // allow all users to perform 'index' and 'view' actions
                 'actions'=>array('index','view'),
-                'controllers'=>array('member','assembly','user','event','logsheet'),
+                'controllers'=>array('cron','site','transaction','member','assembly','user','event','logsheet'),
                 'users'=>array('@'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
                 'actions'=>array('create','update'),
-                'controllers'=>array('member','assembly','user','event','logsheet'),
+                'controllers'=>array('cron','site','transaction','member','assembly','user','event','logsheet'),
                 'users'=>array('@'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
                 'actions'=>array('admin','delete'),
-                'controllers'=>array('member','assembly','user','event','logsheet'),
+                'controllers'=>array('cron','member','transaction','assembly','user','event','logsheet'),
                 'users'=>array('@'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions'=>array('markregister'), // ALLOW AJAXUPDATE TO REGISTERED USERS
+                'actions'=>array('cron','markregister','suggestMember'), // ALLOW AJAXUPDATE TO REGISTERED USERS
                 'users'=>array('@'),
             ),
             array('deny',  // deny all users
-                'controllers'=>array('member','assembly','user','event','logsheet'),
+                'controllers'=>array('cron','site','member','assembly','user','event','logsheet','transaction','account'),
                 'users'=>array('*'),
             ),
         );
@@ -62,6 +63,6 @@ class Controller extends RController
     }
     public function allowedActions()
     {
-        return 'index, login,logout';
+        return 'index, login,logout,create';
     }
 }

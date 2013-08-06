@@ -23,7 +23,10 @@ $this->menu=array(
 	'attributes'=>array(
         'firstname',
         'lastname',
-		array('name'=>'Assembly','value'=>CHtml::encode($model->getAssemblyName())),
+        array(            // display 'assembly.name' using an expression
+            'label'=>'Assembly',
+            'value'=>$model->assembly->name,
+        ),
 		'gender',
 		'phone',
 		'email',
@@ -32,3 +35,23 @@ $this->menu=array(
 
 	),
 )); ?>
+<?php  $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+    'id'=>'mymodal',
+    'options'=>array(
+        'title'=>'Enter Tithe',
+        'width'=>400,
+        'height'=>300,
+        'autoOpen'=>false,
+        'resizable'=>false,
+        'modal'=>true,
+        'overlay'=>array(
+            'backgroundColor'=>'#000',
+            'opacity'=>'0.5'
+        ),),))
+
+?>
+<?php echo $this->renderPartial('_entertithe', array('model'=>$model)); ?>
+
+
+
+<?php $this->endWidget('zii.widgets.jui.CJuiDialog');?>

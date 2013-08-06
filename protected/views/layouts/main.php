@@ -30,12 +30,15 @@
         <?php $this->widget('zii.widgets.CMenu',array(
             'items'=>array(
                 array('label'=>'Home', 'url'=>array('/site/index'), 'visible'=>!Yii::app()->user->isGuest),
-                array('label'=>'Members', 'url'=>array('/member'), 'visible'=>!Yii::app()->user->isGuest),
+                array('label'=>Yii::t('app','Member'), 'url'=>array('/member'), 'visible'=>!Yii::app()->user->isGuest),
+                array('label'=>'Tithes', 'url'=>array('/transaction/create'), 'visible'=>!Yii::app()->user->isGuest),
                 array('label'=>'Assemblies', 'url'=>array('/assembly'), 'visible'=>!Yii::app()->user->isGuest),
                 array('label'=>'Events', 'url'=>array('/event'), 'visible'=>!Yii::app()->user->isGuest),
+                array('label'=>'My Profile', 'url'=>array('/user/profile'), 'visible'=>!Yii::app()->user->isGuest),
                 array('label'=>'Users', 'url'=>array('/user'), 'visible'=>!Yii::app()->user->isGuest),
                 array('label'=>Yii::t('app','Login'), 'url'=>array('/user/login'),'visible'=>Yii::app()->user->isGuest),
                 array('label'=>Yii::t('app','Rights'), 'url'=>array('/rights'),'visible'=>!Yii::app()->user->isGuest),
+                array('label'=>Yii::t('app','Feedback'), 'url'=>array('/site/contact'),'visible'=>!Yii::app()->user->isGuest),
                 array('label'=>Yii::t('app','Logout').' ('.Yii::app()->user->name.')', 'url'=>array('/user/logout'), 'visible'=>!Yii::app()->user->isGuest)
             ,
             ))); ?>

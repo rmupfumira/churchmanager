@@ -113,10 +113,11 @@ class AssemblyController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Assembly');
+		/*$dataProvider=new CActiveDataProvider('Assembly');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
-		));
+		));*/
+        $this->actionAdmin();
 	}
 
 	/**

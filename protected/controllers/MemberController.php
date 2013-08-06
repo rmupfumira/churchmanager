@@ -120,10 +120,11 @@ class MemberController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Member');
+		/*$dataProvider=new CActiveDataProvider('Member');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
-		));
+		));  */
+       $this->actionAdmin();
 	}
 
 	/**
@@ -139,7 +140,9 @@ class MemberController extends Controller
 		$this->render('admin',array(
 			'model'=>$model,
 		));
+
 	}
+
 
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.

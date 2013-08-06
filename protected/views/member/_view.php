@@ -38,9 +38,6 @@
 	<?php echo CHtml::encode($data->status); ?>
 	<br />
 
-    <?php echo CHtml::ajaxLink(Yii::t('transaction','Pay Tithe'),$this->createUrl('transaction/actionDelete'),array(
-        'onclick'=>'$("#titheDialog").dialog("open"); return false;',
-        'update'=>'#titheDialog'
-    ),array('id'=>'showTitheDialog'));?>
-    <div id="titheDialog"></div>
+
+
 </div>

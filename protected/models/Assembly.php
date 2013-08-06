@@ -60,7 +60,8 @@ class Assembly extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
             'members'=> array(self::HAS_MANY, 'Member','assemblyid'),
-            'users' => array(self::HAS_MANY, 'User','assemblyid')
+            'users' => array(self::HAS_MANY, 'User','assemblyid'),
+            'events'=> array(self::HAS_MANY, 'Event','assemblyid')
 		);
 	}
 

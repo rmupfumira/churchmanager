@@ -22,4 +22,8 @@ class Constants {
     const ROLE_ADMINISTRATOR = "Administrator";
     const ROLE_PASTOR = "Pastor";
     const ROLE_SUPER_USER = "Super User";
+    const TXN_TYPE_DEBIT = "Debit";
+    const TXN_TYPE_CREDIT = "Credit";
+    const WINSMS_USERNAME = "luke@rfm.org.za";
+    const WINSMS_PASSWORD = "password85";
 }

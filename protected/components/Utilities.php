@@ -37,6 +37,9 @@ class Utilities {
             return CHtml::listData($members,'memberid','firstname','lastname');
         }
     }
+    public static function moneyFormat($amount){
+        return number_format($amount,2);
+    }
     public static function loadAssemblies($assemblyid){
         //if the assembly is null create it based on input id
         if($assemblyid === null){
@@ -78,6 +81,22 @@ class Utilities {
             Constants::EVENT_CELL_GROUP=>'Cell Group'
         );
     }
+public static function sendSMS($phone, $sms){
+
+    $username = Constants::WINSMS_USERNAME;
+    $password = Constants::WINSMS_PASSWORD;
+    $message = urlencode($sms);
+
+    $url = "http://www.winsms.co.za/api/batchmessage.asp?user=$username&password=$password&message=$message&Numbers=$phone;";
+    $fp = fopen($url, 'r');
+
+    while(!feof($fp)){
+        $line = fgets($fp, 4000);
+        Yii::log('', CLogger::LEVEL_INFO,$line);
+    }
+    fclose($fp);
 }
+}
+
 
 ?>

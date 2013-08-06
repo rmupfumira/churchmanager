@@ -10,6 +10,7 @@ $this->breadcrumbs=array(
 $this->menu=array(
 	array('label'=>'List Member', 'url'=>array('index')),
 	array('label'=>'Create Member', 'url'=>array('create')),
+    array('label'=>'Pay Tithes', 'url'=>array('transaction/create')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -45,12 +46,14 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
 	'columns'=>array(
-		'memberid',
-		'assemblyid',
-		'firstname',
+        'firstname',
 		'lastname',
-		'gender',
 		'phone',
+        'gender',
+        array(            // display 'assembly.name' using an expression
+            'name'=>'assembly',
+            'value'=>'$data->assembly->name',
+        ),
 		/*
 		'email',
 		'homeaddress',

@@ -35,7 +35,7 @@ return array(
 			'ipFilters'=>array('127.0.0.1','::1'),
 		),
         'rights'=>array(
-            'install'=>true,
+            'install'=>false,
         ),
 
         'user'=>array(
@@ -99,8 +99,7 @@ return array(
 		'user'=>array(
             'class'=>'RWebUser',
 			// enable cookie-based authentication
-			'allowAutoLogin'=>true,
-            'loginUrl'=>array('/user/login'),
+            'loginUrl'=>array('/user/user/login'),
         ),
         'authManager'=>array(
             'class'=>'RDbAuthManager',
@@ -120,7 +119,7 @@ return array(
 
 
 		// uncomment the following to use a MySQL database
-
+        //development db
 		'db'=>array(
 			'connectionString' => 'mysql:host=localhost;dbname=churchmanager',
 			'emulatePrepare' => true,
@@ -129,6 +128,15 @@ return array(
 			'charset' => 'utf8',
             'tablePrefix' => 'rfm_',
 		),
+       //production db
+        /*'db'=>array(
+            'connectionString' => 'mysql:host=localhost;dbname=doy08_churchmanager',
+            'emulatePrepare' => true,
+            'username' => 'doy08_churchmgr',
+            'password' => 'pa55w0rd85',
+            'charset' => 'utf8',
+            'tablePrefix' => 'rfm_',
+        ),*/
 
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
@@ -139,7 +147,7 @@ return array(
 			'routes'=>array(
 				array(
 					'class'=>'CFileLogRoute',
-					'levels'=>'error, warning',
+					'levels'=>'error, warning,info',
 				),
 				// uncomment the following to show log messages on web pages
 				/*
